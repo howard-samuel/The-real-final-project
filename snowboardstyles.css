@@ -1,0 +1,80 @@
+/* scratch-styles.css */
+
+/* 1) Global page styles */
+:root{
+  --bg-color: #eaf6ff;
+  --card-bg: rgba(255,255,255,0.9);
+  --text-color: #0f172a;
+  --accent: #0ea5a4;
+}
+
+body{
+  margin:0;
+  font-family: "Helvetica Neue", Arial, sans-serif;  /* font family specified */
+  color: var(--text-color);                          /* font color specified */
+  background: linear-gradient(180deg, var(--bg-color), #ffffff) fixed;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* 2) Header style */
+.site-header{
+  padding:22px;
+  background-image: url('https://images.unsplash.com/photo-1482192505345-5655af888cc4?auto=format&fit=crop&w=1600&q=60');
+  background-size:cover;
+  background-position:center;
+  color:white;
+  text-shadow:0 2px 6px rgba(0,0,0,0.4);
+}
+
+/* 3) Grid layout: three divs */
+.content-grid{
+  display:grid;
+  grid-template-columns: 1fr 1fr 320px;
+  gap:24px;
+  padding:28px;
+}
+
+/* Left column style */
+.left-col{
+  background:var(--card-bg);
+  padding:18px;
+  border-radius:10px;
+  box-shadow: 0 6px 18px rgba(15,23,42,0.06);
+}
+
+/* Middle column style */
+.middle-col{
+  background:var(--card-bg);
+  padding:18px;
+  border-radius:10px;
+  box-shadow: 0 6px 18px rgba(15,23,42,0.06);
+}
+
+/* Right column / aside */
+.right-col{
+  background:var(--card-bg);
+  padding:18px;
+  border-radius:10px;
+  box-shadow: 0 6px 18px rgba(15,23,42,0.06);
+}
+
+/* 4) Image and video rules */
+figure img{
+  max-width:100%;
+  height:auto;
+  border-radius:8px;
+  display:block;
+  margin-top:12px;
+}
+
+/* 5) Small utilities (another style definition) */
+.subtitle{ opacity:0.95; margin-top:6px; }
+nav a{ color:rgba(255,255,255,0.95); margin-right:8px; text-decoration:none; font-weight:600; }
+h2{ color:var(--accent); margin-top:0; }
+
+/* 6) Responsive */
+@media (max-width:1000px){
+  .content-grid{ grid-template-columns: 1fr; }
+  .site-header{ padding:14px; }
+  iframe{ width:100% !important; height:420px !important; }
+}

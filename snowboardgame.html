@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Snowboard Ride Simulator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <style>
+    /* ===== All styles in this single file ===== */
+    *{ box-sizing:border-box; }
+
+    body {
+      margin:0;
+      font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
+      background: linear-gradient(180deg, #020617, #0f172a);
+      color: #e5e7eb;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      min-height:100vh;
+    }
+
+    .app {
+      width:100%;
+      max-width:900px;
+      background: #020617;
+      border-radius:16px;
+      box-shadow: 0 30px 70px rgba(0,0,0,0.5);
+      padding:20px;
+    }
+
+    h1 {
+      text-align:center;
+      margin:10px 0 20px;
+      letter-spacing:1px;
+    }
+
+    .controls {
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-bottom:10px;
+      font-size:0.95rem;
+    }
+
+    .controls span {
+      background:#020617;
+      padding:6px 10px;
+      border-radius:8px;
+      border:1px solid #1e293b;
+    }
+
+    canvas {
+      width:100%;
+      height:420px;
+      background: linear-gradient(#60a5fa, #e0f2fe);
+      border-radius:14px;
+      display:block;
+    }
+
+    .buttons {
+      margin-top:12px;
+      text-align:center;
+    }
+
+    button {
+      background:#0ea5a4;
+      color:#022c22;
+      font-weight:600;
+      border:none;
+      padding:10px 16px;
+      margin:5px;
+      border-radius:10px;
+      cursor:pointer;
+    }
+
+    .nav {
+      margin-top:12px;
+      text-align:center;
+      font-size:0.9rem;
+    }
+
+    .nav a {
+      color:#5eead4;
+      text-decoration:none;
+      margin:0 10px;
+      font-weight:600;
+    }
+  </style>
+</head>
+<body>
+
+<div class="app">
+  <h1>🏂 Snowboard Ride Simulator</h1>
+
+  <div class="controls">
+    <span>Score: <strong id="score">0</strong></span>
+    <span>Speed: <strong id="speed">0</strong></span>
+    <span>Jumps: <strong id="jumps">0</strong></span>
+    <span>Crashes: <strong id="crashes">0</strong></span>
+  </div>
+
+  <canvas id="game"></canvas>
+
+  <div class="buttons">
+    <button onclick="startGame()">Start Ride</button>
+    <button onclick="resetGame()">Reset</button>
+  </div>
+
+  <div class="nav">
+    <a href="scratch_snowboards.html">← Back to Scratch Page</a>
+    <a href="index.html">Professional Site</a>
+  </div>
+</div>
+
+<script>
+  /* ===== Game logic (all in this file) ===== */
+  const canvas = document.getElementById("game");
+  const ctx = canvas.getContext("2d");
+
+  function resizeCanvas(){
+    canvas.width = canvas.clientWidth;
+    canvas.height = canvas.clientHeight;
+  }
+  resizeCanvas();
+  window.addEventListener("resize", resizeCanvas);
+
+  let rider, obstacles, jumpsArr, score, speed, gameActive, crashes, jumpCount;
+
+  function startGame(){
+    rider = { x:100, y:200, size:22, vy:0, onGround:true };
+    obstacles = [];
+    jumpsArr = [];
+    score = 0;
+    speed = 2.2;
+    gameActive = true;
+    crashes = 0;
+    jumpCount = 0;
+
+    gameLoop();
+    spawnLoop();
+  }
+
+  function resetGame(){
+    gameActive = false;
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    document.getElementById("score").textContent = 0;
+    document.getElementById("speed").textContent = 0;
+    document.getElementById("jumps").textContent = 0;
+    document.getElementById("crashes").textContent = 0;
+  }
+
+  function spawnLoop(){
+    if(!gameActive) return;
+
+    const type = Math.random();
+    if(type < 0.6){
+      obstacles.push({ x: canvas.width + 40, w: 20, h: 30 });
+    } else {
+      jumpsArr.push({ x: canvas.width + 40, w: 25, h: 10 });
+    }
+
+    setTimeout(spawnLoop, 900 + Math.random()*700);
+  }
+
+  document.addEventListener("keydown", (e)=>{
+    if(!gameActive) return;
+    if((e.code === "Space" || e.code === "ArrowUp") && rider.onGround){
+      rider.vy = -9;
+      rider.onGround = false;
+    }
+  });
+
+  function gameLoop(){
+    if(!gameActive) return;
+
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+
+    /* Ground */
+    ctx.fillStyle = "#ffffff";
+    ctx.fillRect(0, canvas.height - 50, canvas.width, 50);
+
+    /* Rider */
+    rider.vy += 0.45;
+    rider.y += rider.vy;
+
+    if(rider.y > canvas.height - 50 - rider.size){
+      rider.y = canvas.height - 50 - rider.size;
+      rider.vy = 0;
+      rider.onGround = true;
+    }
+
+    ctx.fillStyle = "#0f172a";
+    ctx.beginPath();
+    ctx.arc(rider.x, rider.y, rider.size, 0, Math.PI * 2);
+    ctx.fill();
+
+    /* Obstacles */
+    ctx.fillStyle = "#ef4444";
+    obstacles.forEach((o, i)=>{
+      o.x -= speed;
+      ctx.fillRect(o.x, canvas.height - 50 - o.h, o.w, o.h);
+
+      if(rider.x + rider.size > o.x && rider.x - rider.size < o.x + o.w &&
+        rider.y + rider.size > canvas.height - 50 - o.h){
+        crashes++;
+        rider.vy = -7;
+        document.getElementById("crashes").textContent = crashes;
+        obstacles.splice(i,1);
+      }
+    });
+
+    /* Jumps */
+    ctx.fillStyle = "#22c55e";
+    jumpsArr.forEach((j, i)=>{
+      j.x -= speed;
+      ctx.fillRect(j.x, canvas.height - 50 - j.h, j.w, j.h);
+
+      if(rider.x + rider.size > j.x && rider.x - rider.size < j.x + j.w &&
+        rider.y + rider.size > canvas.height - 50 - j.h){
+        jumpCount++;
+        score += 10;
+        document.getElementById("jumps").textContent = jumpCount;
+        jumpsArr.splice(i,1);
+      }
+    });
+
+    /* Score & speed */
+    score++;
+    speed += 0.0015;
+
+    document.getElementById("score").textContent = score;
+    document.getElementById("speed").textContent = speed.toFixed(1);
+
+    requestAnimationFrame(gameLoop);
+  }
+</script>
+
+</body>
+</html>

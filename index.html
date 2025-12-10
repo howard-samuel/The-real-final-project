@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Sam Howard — Construction Management</title>
+
+  <!-- Bootstrap CDN for professional layout -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Optional custom small theme tweaks -->
+  <style>
+    :root{
+      --accent:#2b6cb0;
+      --muted:#6b7280;
+    }
+    body { background: #f7fafc; color: #111827; font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; }
+    .hero{ background: linear-gradient(90deg, rgba(43,108,176,0.06), rgba(107,114,128,0.02)); border-radius: 12px; padding: 2rem; }
+    .section-title{ color:var(--accent); font-weight:700; }
+    .skill-pill{ background:#eef2ff; color: #1e293b; padding: 6px 10px; border-radius: 999px; margin-right:6px; font-size:0.9rem; display:inline-block; }
+    footer{ font-size:0.9rem; color:var(--muted); padding:2rem 0; margin-top:3rem; }
+    .nav-link.active{ font-weight:600; color:var(--accent) !important; }
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+    <div class="container">
+      <a class="navbar-brand" href="index.html"><strong>Sam Howard</strong></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div id="nav" class="collapse navbar-collapse">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link active" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="resume.html">Résumé</a></li>
+          <li class="nav-item"><a class="nav-link" href="snowboards.html" target="_blank">Snowboards</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container my-5">
+    <div class="hero d-flex flex-column flex-md-row align-items-start gap-4">
+      <div style="flex:1">
+        <h1 class="mb-1">Sam Howard</h1>
+        <p class="mb-2 text-muted">Construction Management student · Asphalt & Maintenance Technician · Problem-solver on job sites</p>
+        <p>
+          <a href="resume.html" class="btn btn-primary btn-sm me-2">View résumé</a>
+          <a href="snowboards.html" class="btn btn-outline-secondary btn-sm" target="_blank">Snowboards</a>
+        </p>
+      </div>
+
+      <div style="width:260px">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <h6 class="card-title">Contact</h6>
+            <p class="card-text mb-1"><strong>Email:</strong> <a href="mailto:Sambhoward4@gmail.com">Sambhoward4@gmail.com</a></p>
+            <p class="card-text mb-1"><strong>Phone:</strong> 208-497-9019</p>
+            <p class="card-text"><strong>Location:</strong> Rexburg / Provo area</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <section class="mt-5">
+      <h3 class="section-title">Professional Summary</h3>
+      <p class="text-muted">Construction Management student with hands-on experience in asphalt and maintenance work. Strong skills in teamwork, site logistics, and on-site problem solving. Reliable and detail-oriented.</p>
+    </section>
+
+    <section class="row mt-4">
+      <div class="col-md-6">
+        <h5 class="mb-3">Key Skills</h5>
+        <div>
+          <span class="skill-pill">Asphalt / Sealcoat</span>
+          <span class="skill-pill">Site Logistics</span>
+          <span class="skill-pill">Maintenance</span>
+          <span class="skill-pill">Team Leadership</span>
+          <span class="skill-pill">Problem Solving</span>
+        </div>
+
+        <h5 class="mt-4">Education</h5>
+        <p class="mb-0"><strong>Brigham Young University</strong> — Construction Management (Jan 2022 – Present)</p>
+      </div>
+
+      <div class="col-md-6">
+        <h5 class="mb-3">Work Experience</h5>
+        <ul>
+          <li><strong>Asphalt & Sealcoat Technician — Summit Asphalt</strong> (June 2025–Present) — team-based project work, quality control, problem solving on site.</li>
+          <li><strong>Maintenance Technician — The Ridge Apartment Complex</strong> (Apr 2024–Apr 2025) — work orders, diagnostics, resident interactions.</li>
+          <li><strong>Asphalt Technician — Old Man Sealcoat</strong> (May–Sep 2023) — supervised small teams and managed logistics.</li>
+        </ul>
+      </div>
+    </section>
+
+    <footer class="mt-5">
+      <div class="d-flex justify-content-between">
+        <div>© <span id="year"></span> Sam Howard</div>
+        <div class="text-muted">Built with Bootstrap · Clean, professional design</div>
+      </div>
+    </footer>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>
